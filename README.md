@@ -1,3 +1,5 @@
+#Mode d'emploi
+
 Utilisez la commande make pour compiler l'ensemble du projet puis ./start pour tester les différentes possibilités automatiquement
 
 Vous pouvez aussi utiliser ./acquisition suivi d'un numéro de test et d'une valeur symbolisant la durée du test
