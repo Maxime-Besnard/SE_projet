@@ -7,13 +7,13 @@
 #include "lectureEcriture.h"
 #include "message.h"
 
-//test
-
 int main(int argc, char *argv[]){
 			
-	//recupérer les pipes de lecture et d'écriture
+	//recupérer les pipes de lecture et d'écriture et le numero et la valeur du message à generer
 	int lecture=atoi(argv[1]);
 	int ecriture=atoi(argv[2]);
+	char* numero = argv[3];
+	char* val = argv[4];
 	
 
 	//Générer un messsage en utlisant les fonctions de message.h
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]){
 		//on est dans terminal on génère le message en étant une Demande
 
 	char num[255], type[255], valeur[255]; 
-  	char *requete = message("0001000000000000", "Demande", "15");
+  	char *requete = message(numero, "Demande", val);
 	printf("\n[terminal] : La requête a été générée. %s",requete);
 
 
@@ -42,6 +42,16 @@ int main(int argc, char *argv[]){
 		//liLigne sur le pipe de lecture
 	char *reponse = litLigne(lecture);
 	printf("[terminal] : Réponse d'acquisition bien reçue. %s\n", reponse);
+	
+	char repnum[255], reptype[255], repvaleur[255];
+	decoupe(reponse, repnum, reptype, repvaleur);
+	
+	if(strcmp(repvaleur,"0") == 0){
+		printf("[terminal] : Le test n'est pas valide.\n");
+	}
+	else{
+		printf("[terminal] : Le test est valide.\n");
+	}
 
 	return 0;
 }

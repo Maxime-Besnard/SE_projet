@@ -11,6 +11,11 @@
 
 int main(int argc, char *argv[]) {
 
+	//Récupération du numéro et de la valeur du test
+	char* num = argv[1];
+	char* val = argv[2];
+	
+	
 	//Creation de 2 processus childs
 	int pid;
 	int pid2;
@@ -34,11 +39,11 @@ int main(int argc, char *argv[]) {
 
 	if(pid == 0){//Processus terminal
 
-		//Envoie des files descriptors avec execlp (précision des pipes de communication avec terminal)
+		//Envoie des files descriptors et des informations du test avec execlp (précision des pipes de communication avec terminal)
 		snprintf(rterminal,sizeof(rterminal),"%d",fd1[0]);
 		snprintf(wterminal,sizeof(wterminal),"%d",fd2[1]);
 
-		execlp("./terminal","./terminal",rterminal,wterminal,NULL);
+		execlp("./terminal","./terminal",rterminal,wterminal,num,val,NULL);
 		printf("erreur\n");
 		perror("exec");
 		exit(EXIT_FAILURE);
@@ -71,14 +76,14 @@ int main(int argc, char *argv[]) {
 
 	//attendre la réponse de validation
 	char *reponse = litLigne(fd4[0]);
-	if(strcmp(reponse,"err")){
-		printf("Fermeture des processus\n");
-		exit(0);
-	}
+	
+
 	printf("[acquisition] : Réponse de validation bien reçue.\n");
 
 	//retransmets la réponse à terminal
 	ecritLigne(fd1[1],reponse);
 	printf("[acquisition] : Réponse transmise à terminal.\n\n");
+	
+	wait(NULL);
 	return 0;
 }

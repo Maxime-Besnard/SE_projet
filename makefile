@@ -1,4 +1,6 @@
-all: acquisition validation terminal
+all: acquisition validation terminal start
+
+start: 				start.o
 
 acquisition:		acquisition.o lectureEcriture.o message.o
 	gcc -Wall acquisition.c lectureEcriture.o message.o -o acquisition

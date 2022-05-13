@@ -27,23 +27,32 @@ int main(int argc, char *argv[]){
 	
 	char num[255], type[255], valeur[255]; 
   	decoupe(requete, num, type, valeur);
+	
+	char* valide = "1";
 
-	if(strcmp(num, "0001000000000000") != 0){
-		printf("[validation] : Erreur de correspondance!!\n");
-		ecritLigne(ecriture, "err");
-    	exit(0);
+	if(strcmp(num, "0001000000000000") != 0 && strcmp(num, "0001000111000001") != 0){
+		printf("[validation] : Erreur de correspondance !!\n");
+		valide = "0";
 	}
-	printf("[validation] : Le numéro de test PCR correspond.\n");
+	else if(atoi(valeur) > 10){
+		printf("[validation] : Date de validité dépassée !!\n");
+		valide = "0";
+	}
+	else{
+		printf("[validation] : Le numéro de test PCR correspond.\n");
+	}
 	
 
 
 	//retransmets une reponse à acquisition
 		//génere un msg de type Reponse et de valeur 1 si test valide 0 sinon
 
-	char *reponse = message("0001000000000000", "Reponse", valeur);
+	char *reponse = message(num, "Reponse", valide);
 	printf("[validation] : La réponse a bien été générée. %s", reponse);
 
 	ecritLigne(ecriture, reponse);
 	printf("[validation] : La réponse a bien été envoyée vers acquisition.\n\n");
+	
+	return 0;
 
 }
