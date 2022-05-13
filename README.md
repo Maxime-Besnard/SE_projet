@@ -1,4 +1,4 @@
-#Mode d'emploi
+Mode d'emploi :
 
 Utilisez la commande make pour compiler l'ensemble du projet puis ./start pour tester les différentes possibilités automatiquement
 
